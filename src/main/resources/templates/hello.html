@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'hello')}">
+<head>
+	<title>Hello</title>
+</head>
+<body>
+	<div class="container">
+		<p th:text="${science}"/>
+	</div>
+</body>
+</html>
