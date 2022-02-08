@@ -16,6 +16,7 @@
 
 package com.example;
 
+import static java.util.Objects.isNull;
 import static javax.measure.unit.SI.KILOGRAM;
 
 import java.sql.Connection;
@@ -24,6 +25,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.measure.quantity.Mass;
 import javax.sql.DataSource;
@@ -64,8 +66,12 @@ public class Main {
   @RequestMapping("/hello")
   public String hello(Map<String, Object> model) {
 	  RelativisticModel.select();
-	  Amount<Mass> m = Amount.valueOf("12 GeV").to(KILOGRAM);
-	  model.put("science", "E=mc^2: 12 GeV = " + m.toString());
+	  String energy = System.getenv().get("ENERGY"); // Pegando o valor da variável de ambiente do Heroku
+	  if (isNull(energy)) {
+		  energy = "12 GeV";
+	  }
+	  Amount<Mass> m = Amount.valueOf(energy).to(KILOGRAM);
+	  model.put("science", "E=mc^2: " + energy + " = " + m.toString());
 	  return "hello"; // Página HTML
   }
   
